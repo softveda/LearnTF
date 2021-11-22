@@ -8,15 +8,14 @@ pipeline {
     TFE_URL = "https://app.terraform.io"
     TFE_ORGANIZATION = "learn-tf"
     TFE_API_URL = "${TFE_URL}/api/v2"
-    TFE_API_TOKEN = credentials('tfe_api_token')ls
-    
+    TFE_API_TOKEN = credentials('tfe_api_token')
   }
  
   stages {
     stage('Debug') {
       steps {
         sh 'printenv'
-        echo ${TFE_API_TOKEN} > terraformrc
+        sh 'echo ${TFE_API_TOKEN} > terraformrc'
       }
     }
     stage('Terraform Init') {
