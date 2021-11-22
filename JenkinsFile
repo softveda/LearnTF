@@ -14,7 +14,7 @@ pipeline {
   stages {
     stage('Debug') {
       steps {
-        sh 'printenv'
+        sh 'printenv | sort'
         sh 'echo ${TFE_API_TOKEN} > terraformrc'
       }
     }
