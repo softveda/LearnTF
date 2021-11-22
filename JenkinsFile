@@ -16,6 +16,7 @@ pipeline {
     stage('TFE Set-up') {
       steps{
           sh '''
+                echo "${TFE_API_TOKEN}"
                 tee ~/.terraformrc > /dev/null <<EOF
                 credentials "${TFE_NAME}" {
                   token        = "${TFE_API_TOKEN}"
