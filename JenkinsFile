@@ -16,7 +16,7 @@ pipeline {
     stage('TFE Set-up') {
       steps{
           sh '''
-                echo "${TFE_API_TOKEN}"
+                sh 'printenv'
                 tee ~/.terraformrc > /dev/null <<EOF
                 credentials "${TFE_NAME}" {
                   token        = "${TFE_API_TOKEN}"
@@ -39,18 +39,18 @@ EOF
     }
     stage('Terraform Init') {
       steps {
-        sh "${env.TERRAFORM_HOME}/terraform init -input=false -no-color"
+        sh "terraform init -input=false -no-color"
       }
     }
     stage('Terraform Plan') {
       steps {
-        sh "${env.TERRAFORM_HOME}/terraform plan -out=tfplan -input=false -var-file='terraform.tfvars' -no-color"
+        sh "terraform plan -out=tfplan -input=false -var-file='terraform.tfvars' -no-color"
       }
     }
     stage('Terraform Apply') {
       steps {
         input 'Apply Plan'
-        sh "${env.TERRAFORM_HOME}/terraform apply -input=false tfplan -no-color"
+        sh "terraform apply -input=false tfplan -no-color"
       }
     }
   }
