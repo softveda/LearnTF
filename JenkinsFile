@@ -5,8 +5,6 @@ pipeline {
   }
   environment {
     TF_IN_AUTOMATION = 'true'
-    AWS_ACCESS_KEY_ID = credentials("AWS_ACCESS_KEY_ID")
-    AWS_SECRET_ACCESS_KEY = "credentials("AWS_SECRET_ACCESS_KEY")
     TFE_NAME = "app.terraform.io"
     TFE_URL = "https://app.terraform.io"
     TFE_ORGANIZATION = "learn-tf"
