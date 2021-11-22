@@ -16,7 +16,20 @@ pipeline {
     TFE_API_URL = "${TFE_URL}/api/v2"
     TFE_API_TOKEN = credentials("tfe_api_token")
   }
-   stage('TFE Workspaces list ') {
+ 
+  stages {
+    stage('TFE Set-up') {
+      steps{
+          sh '''
+                tee ~/.terraformrc > /dev/null <<EOF
+                credentials "${TFE_NAME}" {
+                  token        = "${TFE_API_TOKEN}"
+                }
+EOF
+          '''
+      }
+    }
+    stage('TFE Workspaces list ') {
       steps {
           sh '''
             curl \
@@ -27,33 +40,21 @@ pipeline {
               | jq -r \'.data[] | .attributes.name\'
           '''
       }
-  }
-  stage('TFE Set-up') {
-    steps{
-        sh '''
-              tee ~/.terraformrc > /dev/null <<EOF
-              credentials "${TFE_NAME}" {
-                token        = "${TFE_API_TOKEN}"
-              }
-EOF
-        '''
     }
-}
-  stages {
     stage('Terraform Init') {
       steps {
-        sh "${env.TERRAFORM_HOME}/terraform init -input=false"
+        sh "${env.TERRAFORM_HOME}/terraform init -input=false -no-color"
       }
     }
     stage('Terraform Plan') {
       steps {
-        sh "${env.TERRAFORM_HOME}/terraform plan -out=tfplan -input=false -var-file='terraform.tfvars'"
+        sh "${env.TERRAFORM_HOME}/terraform plan -out=tfplan -input=false -var-file='terraform.tfvars' -no-color"
       }
     }
     stage('Terraform Apply') {
       steps {
         input 'Apply Plan'
-        sh "${env.TERRAFORM_HOME}/terraform apply -input=false tfplan"
+        sh "${env.TERRAFORM_HOME}/terraform apply -input=false tfplan -no-color"
       }
     }
   }
