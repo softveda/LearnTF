@@ -1,10 +1,7 @@
 terraform {
-  backend "remote" {
-    organization = "pratik-hc"
-
-    workspaces {
-      name = "learn-tf"
-    }
+  backend "s3" {
+    bucket = "learn-tf-state-backend"
+    key    = "jenkins/lear-tf.state"
   }
 
   required_providers {
