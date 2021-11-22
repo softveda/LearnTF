@@ -15,8 +15,7 @@ pipeline {
   stages {
     stage('TFE Set-up') {
       steps{
-          sh '''
-                sh 'printenv'
+          sh '''                
                 tee ~/.terraformrc > /dev/null <<EOF
                 credentials "${TFE_NAME}" {
                   token        = "${TFE_API_TOKEN}"
