@@ -30,7 +30,7 @@ EOF
           sh '''
             curl \
               --silent --show-error --fail \
-              --header "Authorization: Bearer $TFE_API_TOKEN" \
+              --header "Authorization: Bearer ${TFE_API_TOKEN}" \
               --header "Content-Type: application/vnd.api+json" \
               ${TFE_API_URL}/organizations/${TFE_ORGANIZATION}/workspaces \
               | jq -r \'.data[] | .attributes.name\'
