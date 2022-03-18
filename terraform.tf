@@ -1,9 +1,9 @@
 terraform {
-  backend "s3" {
+  /*backend "s3" {
     bucket = "learn-tf-state-backend"
     key    = "jenkins/lear-tf.state"
     region = "ap-southeast-2"
-  }
+  }*/
 
   required_providers {
     aws = {
