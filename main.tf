@@ -13,6 +13,6 @@ resource "aws_instance" "server" {
   key_name      = aws_key_pair.deployer.key_name
 
   tags = {
-    "Desc" = "${local.project_name}-server-01"
+    "Info" = "${local.project_name}-server-01"
   }
 }
